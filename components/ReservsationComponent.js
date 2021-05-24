@@ -44,7 +44,6 @@ class Reservsation extends Component {
 
   toggleModal() {
     this.setState({ showModal: !this.state.showModal });
-    console.log('fired');
   }
 
   render() {
