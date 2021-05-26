@@ -7,6 +7,8 @@ import {
   Modal,
   Button,
   StyleSheet,
+  Alert,
+  PanResponder,
 } from 'react-native';
 import { Card, Icon, Input, Rating } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -33,12 +35,46 @@ function RenderCampsite({
   markFavorite,
   onShowModal,
 }) {
+  const recognizeDrag = ({ dx }) => (dx < -200 ? true : false);
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderEnd: (e, gestureState) => {
+      console.log('pan responder end', gestureState);
+      if (recognizeDrag(gestureState)) {
+        Alert.alert(
+          'Add Favorite',
+          'Are you sure you wish to add' +
+            campsite.name +
+            'to favorite?',
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel',
+              onPress: () => console.log('cancel pressed'),
+            },
+            {
+              text: 'OK',
+              onPress: () =>
+                favorite
+                  ? alert('Already marked as favorite')
+                  : markFavorite(),
+            },
+          ],
+          { cancelable: false },
+        );
+      }
+      return true;
+    },
+  });
+
   if (campsite) {
     return (
       <Animatable.View
         animation="fadeInDown"
         duration={2000}
         delay={1000}
+        {...panResponder.panHandlers}
       >
         <Card
           featuredTitle={campsite.name}
