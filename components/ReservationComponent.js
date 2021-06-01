@@ -12,7 +12,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Animatable from 'react-native-animatable';
 
-class Reservsation extends Component {
+class Reservation extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -175,4 +175,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Reservsation;
+export default Reservation;
